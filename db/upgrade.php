@@ -119,8 +119,11 @@ function xmldb_forum_upgrade($oldversion) {
     // Automatically generated Moodle v3.5.0 release upgrade line.
     // Put any upgrade step following this.
 
+<<<<<<< HEAD
     // Automatically generated Moodle v3.6.0 release upgrade line.
     // Put any upgrade step following this.
 
+=======
+>>>>>>> 44376e3c073335872e0c310f869231b5dd59fd52
     return true;
 }

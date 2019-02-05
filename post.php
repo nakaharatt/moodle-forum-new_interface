@@ -349,6 +349,7 @@ if (!empty($forum)) {      // User is starting a new discussion in a forum.
                 $event->add_record_snapshot('forum_discussions', $discussion);
                 $event->trigger();
 
+<<<<<<< HEAD
                 $message = get_string('eventdiscussiondeleted', 'forum');
                 redirect(
                     new moodle_url('/mod/forum/view.php', ['f' => $discussion->forum]),
@@ -356,6 +357,9 @@ if (!empty($forum)) {      // User is starting a new discussion in a forum.
                     null,
                     \core\output\notification::NOTIFY_SUCCESS
                 );
+=======
+                redirect(new moodle_url('/mod/forum/view.php', ['f' => $discussion->forum]));
+>>>>>>> 44376e3c073335872e0c310f869231b5dd59fd52
 
             } else if (forum_delete_post($post, has_capability('mod/forum:deleteanypost', $modcontext),
                 $course, $cm, $forum)) {
@@ -806,8 +810,13 @@ if ($mformpost->is_cancelled()) {
         unset($fromform->groupid);
         $message = '';
         $addpost = $fromform;
+<<<<<<< HEAD
         $addpost->forum = $forum->id;
         if ($fromform->id = forum_add_new_post($addpost, $mformpost)) {
+=======
+        $addpost->forum=$forum->id;
+        if ($fromform->id = forum_add_new_post($addpost, $mform_post)) {
+>>>>>>> 44376e3c073335872e0c310f869231b5dd59fd52
             $fromform->deleted = 0;
             $subscribemessage = forum_post_subscription($fromform, $forum, $discussion);
 
