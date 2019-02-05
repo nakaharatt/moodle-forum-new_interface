@@ -24,13 +24,9 @@
 
 namespace mod_forum\privacy;
 
-<<<<<<< HEAD
 use \core_privacy\local\request\userlist;
 use \core_privacy\local\request\approved_contextlist;
 use \core_privacy\local\request\approved_userlist;
-=======
-use \core_privacy\local\request\approved_contextlist;
->>>>>>> 44376e3c073335872e0c310f869231b5dd59fd52
 use \core_privacy\local\request\deletion_criteria;
 use \core_privacy\local\request\writer;
 use \core_privacy\local\request\helper as request_helper;
@@ -52,12 +48,9 @@ class provider implements
     // This plugin currently implements the original plugin\provider interface.
     \core_privacy\local\request\plugin\provider,
 
-<<<<<<< HEAD
     // This plugin is capable of determining which users have data within it.
     \core_privacy\local\request\core_userlist_provider,
 
-=======
->>>>>>> 44376e3c073335872e0c310f869231b5dd59fd52
     // This plugin has some sitewide user preferences to export.
     \core_privacy\local\request\user_preference_provider
 {
@@ -156,11 +149,7 @@ class provider implements
      * In the case of forum, that is any forum where the user has made any post, rated any content, or has any preferences.
      *
      * @param   int         $userid     The user to search.
-<<<<<<< HEAD
      * @return  contextlist $contextlist  The contextlist containing the list of contexts used in this plugin.
-=======
-     * @return  contextlist   $contextlist  The contextlist containing the list of contexts used in this plugin.
->>>>>>> 44376e3c073335872e0c310f869231b5dd59fd52
      */
     public static function get_contexts_for_userid(int $userid) : \core_privacy\local\request\contextlist {
         $ratingsql = \core_rating\privacy\provider::get_sql_join('rat', 'mod_forum', 'post', 'p.id', $userid);
@@ -209,7 +198,6 @@ class provider implements
     }
 
     /**
-<<<<<<< HEAD
      * Get the list of users within a specific context.
      *
      * @param   userlist    $userlist   The userlist containing the list of users who have data in this context/plugin combination.
@@ -302,8 +290,6 @@ class provider implements
     }
 
     /**
-=======
->>>>>>> 44376e3c073335872e0c310f869231b5dd59fd52
      * Store all user preferences for the plugin.
      *
      * @param   int         $userid The userid of the user whose data is to be exported.
@@ -882,10 +868,7 @@ class provider implements
         $DB->delete_records('forum_track_prefs', ['forumid' => $forumid]);
         $DB->delete_records('forum_subscriptions', ['forum' => $forumid]);
         $DB->delete_records('forum_read', ['forumid' => $forumid]);
-<<<<<<< HEAD
         $DB->delete_records('forum_digests', ['forum' => $forumid]);
-=======
->>>>>>> 44376e3c073335872e0c310f869231b5dd59fd52
 
         // Delete all discussion items.
         $DB->delete_records_select(
@@ -946,14 +929,11 @@ class provider implements
                 'userid' => $userid,
             ]);
 
-<<<<<<< HEAD
             $DB->delete_records('forum_digests', [
                 'forum' => $forum->id,
                 'userid' => $userid,
             ]);
 
-=======
->>>>>>> 44376e3c073335872e0c310f869231b5dd59fd52
             // Delete all discussion items.
             $DB->delete_records_select(
                 'forum_queue',
@@ -969,7 +949,6 @@ class provider implements
                 'userid' => $userid,
             ]);
 
-<<<<<<< HEAD
             // Do not delete discussion or forum posts.
             // Instead update them to reflect that the content has been deleted.
             $postsql = "userid = :userid AND discussion IN (SELECT id FROM {forum_discussions} WHERE forum = :forum)";
@@ -1058,50 +1037,5 @@ class provider implements
         $fs = get_file_storage();
         $fs->delete_area_files_select($context->id, 'mod_forum', 'post', "IN ($postidsql)", $params);
         $fs->delete_area_files_select($context->id, 'mod_forum', 'attachment', "IN ($postidsql)", $params);
-=======
-            $uniquediscussions = $DB->get_recordset('forum_discussions', [
-                    'forum' => $forum->id,
-                    'userid' => $userid,
-                ]);
-
-            foreach ($uniquediscussions as $discussion) {
-                // Do not delete discussion or forum posts.
-                // Instead update them to reflect that the content has been deleted.
-                $postsql = "userid = :userid AND discussion IN (SELECT id FROM {forum_discussions} WHERE forum = :forum)";
-                $postidsql = "SELECT fp.id FROM {forum_posts} fp WHERE {$postsql}";
-                $postparams = [
-                    'forum' => $forum->id,
-                    'userid' => $userid,
-                ];
-
-                // Update the subject.
-                $DB->set_field_select('forum_posts', 'subject', '', $postsql, $postparams);
-
-                // Update the subject and its format.
-                $DB->set_field_select('forum_posts', 'message', '', $postsql, $postparams);
-                $DB->set_field_select('forum_posts', 'messageformat', FORMAT_PLAIN, $postsql, $postparams);
-
-                // Mark the post as deleted.
-                $DB->set_field_select('forum_posts', 'deleted', 1, $postsql, $postparams);
-
-                // Note: Do _not_ delete ratings of other users. Only delete ratings on the users own posts.
-                // Ratings are aggregate fields and deleting the rating of this post will have an effect on the rating
-                // of any post.
-                \core_rating\privacy\provider::delete_ratings_select($context, 'mod_forum', 'post',
-                        "IN ($postidsql)", $postparams);
-
-                // Delete all Tags.
-                \core_tag\privacy\provider::delete_item_tags_select($context, 'mod_forum', 'forum_posts',
-                        "IN ($postidsql)", $postparams);
-
-                // Delete all files from the posts.
-                $fs = get_file_storage();
-                $fs->delete_area_files_select($context->id, 'mod_forum', 'post', "IN ($postidsql)", $postparams);
-                $fs->delete_area_files_select($context->id, 'mod_forum', 'attachment', "IN ($postidsql)", $postparams);
-            }
-
-            $uniquediscussions->close();
-        }
->>>>>>> 44376e3c073335872e0c310f869231b5dd59fd52
     }
 }

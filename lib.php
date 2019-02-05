@@ -3340,7 +3340,6 @@ function forum_print_post($post, $discussion, $forum, &$cm, $course, $ownpost=fa
             echo $output;
             return;
         }
-<<<<<<< HEAD
         $output .= html_writer::start_tag('div', [
                 'class' => 'forumpost clearfix',
                 'aria-label' => get_string('forumbodydeleted', 'forum'),
@@ -3348,19 +3347,6 @@ function forum_print_post($post, $discussion, $forum, &$cm, $course, $ownpost=fa
 
         $output .= html_writer::start_tag('header', array('class' => 'row header'));
         $output .= html_writer::tag('div', '', array('class' => 'left picture', 'role' => 'presentation'));
-=======
-        $output .= html_writer::tag('a', '', [
-                'id' => "p{$post->id}",
-            ]);
-        $output .= html_writer::start_tag('div', [
-                'class' => 'forumpost clearfix',
-                'role' => 'region',
-                'aria-label' => get_string('forumbodydeleted', 'forum'),
-            ]);
-
-        $output .= html_writer::start_tag('div', array('class' => 'row header'));
-        $output .= html_writer::tag('div', '', array('class' => 'left picture'));
->>>>>>> 44376e3c073335872e0c310f869231b5dd59fd52
 
         $classes = ['topic'];
         if (!empty($post->parent)) {
@@ -3372,7 +3358,6 @@ function forum_print_post($post, $discussion, $forum, &$cm, $course, $ownpost=fa
         $output .= html_writer::tag('div', get_string('forumsubjectdeleted', 'forum'), [
                 'class' => 'subject',
                 'role' => 'header',
-<<<<<<< HEAD
                 'id' => ('headp' . $post->id)
             ]);
 
@@ -3381,18 +3366,6 @@ function forum_print_post($post, $discussion, $forum, &$cm, $course, $ownpost=fa
 
         $output .= html_writer::end_tag('div');
         $output .= html_writer::end_tag('header'); // End header.
-=======
-            ]);
-
-        // Author.
-        $output .= html_writer::tag('div', '', [
-                'class' => 'author',
-                'role' => 'header',
-            ]);
-
-        $output .= html_writer::end_tag('div');
-        $output .= html_writer::end_tag('div'); // End row.
->>>>>>> 44376e3c073335872e0c310f869231b5dd59fd52
         $output .= html_writer::start_tag('div', ['class' => 'row']);
         $output .= html_writer::tag('div', '&nbsp;', ['class' => 'left side']); // Groups.
         $output .= html_writer::tag('div', get_string('forumbodydeleted', 'forum'), ['class' => 'content']); // Content.
@@ -3947,7 +3920,6 @@ function forum_print_discussion_header(&$post, $forum, $group = -1, $datestring 
 
     $post->subject = format_string($post->subject,true);
 
-    $canviewfullnames = has_capability('moodle/site:viewfullnames', $modcontext);
     $timeddiscussion = !empty($CFG->forum_enabletimedposts) && ($post->timestart || $post->timeend);
     $timedoutsidewindow = '';
     if ($timeddiscussion && ($post->timestart > time() || ($post->timeend != 0 && $post->timeend < time()))) {
@@ -4110,11 +4082,7 @@ function forum_get_discussion_subscription_icon($forum, $discussionid, $returnur
     }
 
     if ($subscriptionstatus) {
-<<<<<<< HEAD
         $output = $OUTPUT->pix_icon('t/on', get_string('clicktounsubscribe', 'forum'), 'mod_forum'); //Change by 3strings
-=======
-        $output = $OUTPUT->pix_icon('t/on', get_string('clicktounsubscribe', 'forum'), 'mod_forum'); //Changed by 3strigs
->>>>>>> 44376e3c073335872e0c310f869231b5dd59fd52
         if ($includetext) {
             $output .= get_string('subscribed', 'mod_forum');
         }
@@ -4128,11 +4096,7 @@ function forum_get_discussion_subscription_icon($forum, $discussionid, $returnur
             ));
 
     } else {
-<<<<<<< HEAD
         $output = $OUTPUT->pix_icon('t/off', get_string('clicktosubscribe', 'forum'), 'mod_forum'); //Change by 3strings
-=======
-        $output = $OUTPUT->pix_icon('t/off', get_string('clicktosubscribe', 'forum'), 'mod_forum'); //Changed by 3strigs
->>>>>>> 44376e3c073335872e0c310f869231b5dd59fd52
         if ($includetext) {
             $output .= get_string('notsubscribed', 'mod_forum');
         }
@@ -5733,10 +5697,10 @@ function forum_print_latest_discussions($course, $forum, $maxdiscussions = -1, $
         $unreads = array();
     }
 
-    //ここらへんから投稿一覧
+    //ここらへんから投稿一覧やな
     if ($displayformat == 'header') {
         echo '<table cellspacing="0" class="forumheaderlist">';
-        echo '<thead  class="text-left">';
+        echo '<thead>';
         echo '<tr>';
         echo '<th class="header topic" scope="col">'.get_string('discussion', 'forum').'</th>';
         
@@ -5860,10 +5824,6 @@ function forum_print_latest_discussions($course, $forum, $maxdiscussions = -1, $
     }
 }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 44376e3c073335872e0c310f869231b5dd59fd52
 /**
  * Prints a forum discussion
  *
@@ -6063,11 +6023,7 @@ function forum_print_posts_threaded($course, &$cm, $forum, $discussion, $parent,
                 } else {
                     $by = new stdClass();
                     $by->name = fullname($post, $canviewfullnames);
-<<<<<<< HEAD
                     $by->date = userdate_htmltime($post->modified);
-=======
-                    $by->date = userdate($post->modified);
->>>>>>> 44376e3c073335872e0c310f869231b5dd59fd52
                     $byline = ' ' . get_string("bynameondate", "forum", $by);
                     $subject = format_string($post->subject, true);
                 }
